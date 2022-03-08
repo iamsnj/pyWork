@@ -1,0 +1,142 @@
+{% extends 'main.html' %}{% block content %}
+    <div class="login">
+        <form id="signupform" action="/user-details/" method="POST">
+            <div id="email-pass">
+                <div class="row mb-3">
+                    <label for="email" class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div id="msg"></div>
+                </div>
+                <div class="row mb-3">
+                    <label for="password" class="col-sm-4 col-form-label">Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="repassword" class="col-sm-4 col-form-label">Confirm Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="repassword" name="repassword" required>
+                    </div>
+                </div>
+                <div id="msg2"></div><br>
+                <button type="button" class="btn btn-primary" id="submit" name="next" value="next" onclick="getUserInfo()">Next</button>
+            </div>
+
+            <div id='user-info' style="display: none;">
+                <div class="row mb-3">
+                    <label for="firstname" class="col-sm-4 col-form-label">First Name</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="lastname" class="col-sm-4 col-form-label">Last Name</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="lastname" name="lastname" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="age" class="col-sm-4 col-form-label">Age</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" id="age" name="age" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <p class="col-sm-4">Gender</p>
+                    <div class="col-sm-8">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="male">
+                            <label class="form-check-label" for="male">
+                                Male
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="female">
+                            <label class="form-check-label" for="gender">
+                                Female
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="other">
+                            <label class="form-check-label" for="other">
+                                Other
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="location" class="col-sm-4 col-form-label">Location</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="location" name="location" required>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#email").on('input', function (e) {
+                console.log('done');
+                $('#msg').hide();
+                if ($('#email').val() == null || $('#email').val() == "") {
+                    $('#msg').show();
+                    $("#msg").html("Email is required field.").css("color", "red");
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/email_check",
+                        data: $('#signupform').serialize(),
+                        dataType: "html",
+                        cache: false,
+                        success: function (msg) {
+                            $("#submit").attr("disabled", true);
+                            $('#msg').show();
+                            $("#msg").html(msg).css('color', 'red');
+                        }
+                    });
+                    $("#submit").attr("disabled", false);
+               }
+            });
+
+            $("#repassword").on('input', function (e) {
+                $('#msg2').hide();
+                if ($('#password').val() != $('#repassword').val()) {
+                    $("#submit").attr("disabled", true);
+                    var msg = 'Password should match'
+                    $('#msg2').show();
+                    $("#msg2").html(msg).css('color', 'red');
+                }
+                else {
+                    $("#submit").attr("disabled", false);
+                }
+            });
+
+            $("#password").on('input', function (e) {
+                $('#msg2').hide();
+                if ($('#password').val() != $('#repassword').val()) {
+                    $("#submit").attr("disabled", true);
+                    var msg = 'Password did not match'
+                    $('#msg2').show();
+                    $("#msg2").html(msg).css('color', 'red');
+                }
+                else {
+                    $("#submit").attr("disabled", false);
+                }
+            });
+        });
+
+        function getUserInfo() {
+            $('#email-pass').hide();
+            $('#user-info').show();
+
+        }
+    </script>
+{% endblock %}

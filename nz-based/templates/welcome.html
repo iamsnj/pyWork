@@ -1,0 +1,25 @@
+{% extends 'main.html' %}{% block content %}
+    <a href="/logout/">Logout</a>
+    <nav class="navbar fixed-top navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Categories</a>
+          <a class="navbar-brand" href="/logout/">Logout</a>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="text">Search</button>
+          </form>
+        </div>
+      </nav>
+      <div class="col-md-8">
+        <div class="content-section p-4">
+            <h3>Parent Situations</h3>
+            <ul class="list-group catg">
+                <a href="{{url_for('static', filename='parenting.mp4')}}" target="video"><li class="list-group-item list-group-item-dark">Tooth brushing</li></a>
+                <a href="#"><li class="list-group-item list-group-item-dark">Sleeping</li></a>
+                <a href="#"><li class="list-group-item list-group-item-dark">Eating</li></a>
+                <a href="#"><li class="list-group-item list-group-item-dark">Meltdown</li></a>
+            </ul>
+        </div>
+        <iframe name="video" title="Video" height="400" width="600"></iframe>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% block content %}
+    <div class="login">
+        <form action="/login/" method="POST">
+            <div class="row mb-3">
+                <label for="email" class="col-sm-4 col-form-label">Email</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="password" class="col-sm-4 col-form-label">Password</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </form><hr>
+        <p class="not-register">Not yet Registered?<a href="/signup"> Signup</a></p>
+    </div>
+{% endblock %}
